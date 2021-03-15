@@ -1,6 +1,6 @@
 --[[
    			    
-	    		   // Blacksteel initUtil Project \\                  
+	    		   // Blackfork initUtil Project \\                  
 
                                       [DISCLAIMER] 
 	   I understand that my scripts may not be the prettiest or most efficient, 
@@ -9,11 +9,11 @@
 --]]
 
 
-if getgenv()["BSinitUtil_Loaded"] == true then return end
+if getgenv()["BFinitUtil_Loaded"] == true then return end
 repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
-getgenv()["BSinitUtil_Loaded"] = true;
+getgenv()["BFinitUtil_Loaded"] = true;
 getgenv()["versionId"] = "v0.0.1a"
 
 local mt = getrawmetatable(game);
@@ -36,7 +36,7 @@ getgenv()["loaderpresets"] = {
 	["MTAPI"] = "https://pastebin.com/raw/UwFCVrhS";
 };
 
-local BSinitUtil = {
+local BFinitUtil = {
 	["getChildren"] = function(...)
 		local args = {...};
 		local path = args[1];
@@ -274,7 +274,7 @@ getgenv()["setAlias"] = function(...)
 
 end;
 
-for i,v in pairs(BSinitUtil) do
+for i,v in pairs(BFinitUtil) do
 	getgenv()[i] = v; -- creating the moves
 end
 
@@ -285,5 +285,5 @@ end
 setreadonly(mt, true);
 
 if getgenv()["notifonstart"] then
-notify("Blacksteel", "initUtil ".. versionId.. " loaded.", "http://www.roblox.com/asset/?id=5647507800");
+notify("Blackfork", "initUtil ".. versionId.. " loaded.", "http://www.roblox.com/asset/?id=5647507800");
 end
