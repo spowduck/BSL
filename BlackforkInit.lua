@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BFinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.1a"
+getgenv()["versionId"] = "v0.0.1"
 
 local function L(url)
 	return loadstring(game:HttpGet(tostring(url)))()
