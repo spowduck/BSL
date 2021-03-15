@@ -284,4 +284,6 @@ end
 
 setreadonly(mt, true);
 
+if getgenv()["notifonstart"] then
 notify("Blacksteel", "initUtil ".. versionId.. " loaded.", "http://www.roblox.com/asset/?id=5647507800");
+end
