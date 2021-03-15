@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.4d"
+getgenv()["versionId"] = "v0.0.5"
 
 local mt = getrawmetatable(game);
 setreadonly(mt, false);
@@ -140,9 +140,10 @@ local BSinitUtil = {
 			setreadonly(mt, false);
 
 			coroutine.wrap(function()
-				mt.__index = newcclosure(function(index, property)
-					callback(index, property)
-				end)
+				mt.__index = newcclosure(function(indexed,property) -- detects if a part is indexed (Referring to Humanoid.WalkSpeed)
+					if indexed == getgenv()['old'] then return end
+					callback(indexed, property)
+				end
 			end)()
 
 			setreadonly(mt, true);
