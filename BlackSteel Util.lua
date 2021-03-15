@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.5b"
+getgenv()["versionId"] = "v0.0.5c"
 
 local mt = getrawmetatable(game);
 setreadonly(mt, false);
@@ -25,6 +25,16 @@ getgenv()['old'] = {
 };
 
 setreadonly(mt, true);
+
+local function L(url)
+	return loadstring(game:HttpGet(tostring(url)))()
+end
+
+
+getgenv()["loaderpresets"] = {
+	["IY"] = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source";
+	["MTAPI"] = "https://pastebin.com/raw/UwFCVrhS";
+};
 
 local BSinitUtil = {
 	["getChildren"] = function(...)
@@ -58,8 +68,18 @@ local BSinitUtil = {
 		local args = {...};
 		local url = args[1];
 
-		return loadstring(game:HttpGet(tostring(url)))()
+		return L(url)
 	end;
+	["QL"] = function(...)
+		local args = {...};
+		
+		local presetName = args[1];
+		local preset = getgenv()["loaderpresets"][presetName];
+		
+		if preset then
+			return L(preset);
+		end;
+	end,
 	["chat"] = function(...)
 		local args = {...};
 		local message = args[1] or "ez";
