@@ -16,20 +16,9 @@ repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 getgenv()["BFinitUtil_Loaded"] = true;
 getgenv()["versionId"] = "v0.0.1a"
 
-local mt = getrawmetatable(game);
-setreadonly(mt, false);
-
-getgenv()['old'] = {
-	namecall = mt.__namecall;
-	newindex = mt.__newindex;
-};
-
-setreadonly(mt, true);
-
 local function L(url)
 	return loadstring(game:HttpGet(tostring(url)))()
 end
-
 
 getgenv()["loaderpresets"] = {
 	["IY"] = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source";
@@ -72,10 +61,10 @@ local BFinitUtil = {
 	end;
 	["QL"] = function(...)
 		local args = {...};
-		
+
 		local presetName = args[1];
 		local preset = getgenv()["loaderpresets"][presetName];
-		
+
 		if preset then
 			return L(preset);
 		end;
@@ -139,38 +128,32 @@ local BFinitUtil = {
 
 	end;
 	["namecall"] = function(callback)		
+		local mt = getrawmetatable(game);
+		getgenv()['oldnamecall'] = mt.__namecall
+
+		setreadonly(mt, false);
 
 		if callback then
-			setreadonly(mt, false);
-
-
-			coroutine.wrap(function()
-				mt.__namecall = newcclosure(function(self, ...)
-					local args = {...};
-					local method = getnamecallmethod()
-
-					callback(self, method, ...);
-				end)
-			end)()
-
-
-			setreadonly(mt, true);
+			mt.__namecall = newcclosure(function(par, ...)
+				return callback(par, ...);
+			end)
 		end;
+
+		setreadonly(mt, true);		
 	end;
 	["newindex"] = function(callback)
+		local mt = getrawmetatable(game);
+		getgenv()['oldnewindex'] = mt.__newindex
+
+		setreadonly(mt, false);
+
 		if callback then
-			setreadonly(mt, false);
-
-
-			coroutine.wrap(function()
-				mt.__newindex = newcclosure(function(tab, index, val)
-					callback(tab, index, val);
-				end)
-			end)()
-
-
-			setreadonly(mt, true);
+			mt.__newindex = newcclosure(function(tab, index, val)
+				return callback(tab, index, val);
+			end)
 		end
+
+		setreadonly(mt, true);
 	end;
 	["setuvalue"] = function(...)
 		local args = {...};
@@ -227,9 +210,9 @@ local BFinitUtil = {
 	["runonspawn"] = function(...)
 		local args = {...};
 		local callback = args[1];
-		
+
 		local pp = game.Players.LocalPlayer
-		
+
 		pp.CharacterAdded:Connect(function(ad)
 			callback()
 		end)
@@ -275,15 +258,13 @@ getgenv()["setAlias"] = function(...)
 end;
 
 for i,v in pairs(BFinitUtil) do
-	getgenv()[i] = v; -- creating the moves
+	getgenv()[i] = v; -- setting the funcs and stuff.
 end
 
 for al,va in pairs(shorts) do
-	getgenv()[al] = va;
+	getgenv()[al] = va; -- creating the shorts
 end
 
-setreadonly(mt, true);
-
 if getgenv()["notifonstart"] then
-notify("Blackfork", "initUtil ".. versionId.. " loaded.", "http://www.roblox.com/asset/?id=5647507800");
+	notify("Blackfork", "initUtil ".. versionId.. " loaded.", "http://www.roblox.com/asset/?id=5647507800");
 end
