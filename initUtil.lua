@@ -8,7 +8,7 @@
      		 	 =--=
 --]]
 local p = game.Players.LocalPlayer
-repeat wait() until p:HasAppearanceLoaded();
+repeat wait() until p and p:HasAppearanceLoaded();
 
 
 getgenv()["BSinitUtil_Loaded"] = true;
