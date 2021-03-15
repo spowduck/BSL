@@ -12,6 +12,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
  
 getgenv()["BSinitUtil_Loaded"] = true;
+getgenv()["versionId"] = "v0.0.2"
 
 local BSinitUtil = {
 	["getChildren"] = function(...)
