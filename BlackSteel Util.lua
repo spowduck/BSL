@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.5c"
+getgenv()["versionId"] = "v0.0.1a"
 
 local mt = getrawmetatable(game);
 setreadonly(mt, false);
@@ -283,3 +283,6 @@ for al,va in pairs(shorts) do
 end
 
 setreadonly(mt, true);
+
+notify("Blacksteel", "initUtil ".. versionId.. " loaded.", "http://www.roblox.com/asset/?id=5647507800")
+notify("Disclaimer", "I understand that my scripts may not be the prettiest or most efficient, but I made this as a quick access for my own scripting and decided to release this.")
