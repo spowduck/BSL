@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.4a"
+getgenv()["versionId"] = "v0.0.4b"
 
 local mt = getrawmetatable(game);
 setreadonly(mt, false);
@@ -128,8 +128,7 @@ local BSinitUtil = {
 				local method = getnamecallmethod()
 
 				callback(self, method);
-
-				print("test!")
+				
 				return old.namecall(self, ...);
 			end)
 
