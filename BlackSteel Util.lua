@@ -1,11 +1,11 @@
 --[[
-     _____________________________
-    // Blacksteel initUtil Branch \\                  
-    \\  PROJECT IS IN PRE-ALPHA!  //
-     ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-     		 =--= .. =--=     
-     		 QUICK ACCESS
-     		 =--= .. =--=
+   			    
+	    		   // Blacksteel initUtil Project \\                  
+
+                                      [DISCLAIMER] 
+	   I understand that my scripts may not be the prettiest or most efficient, 
+	but I made this as a quick access for my own scripting and decided to release it for 
+			other people to use as well for their own benefit.
 --]]
 
 
@@ -285,4 +285,3 @@ end
 setreadonly(mt, true);
 
 notify("Blacksteel", "initUtil ".. versionId.. " loaded.", "http://www.roblox.com/asset/?id=5647507800");
-notifyInChat("Disclaimer: I understand that my scripts may not be the prettiest or most efficient, but I made this as a quick access for my own scripting and decided to release it for other people to use as well.");
