@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.4c"
+getgenv()["versionId"] = "v0.0.4d"
 
 local mt = getrawmetatable(game);
 setreadonly(mt, false);
@@ -122,12 +122,14 @@ local BSinitUtil = {
 			setreadonly(mt, false);
 
 
-			mt.__namecall = newcclosure(function(self, ...)
-				local args = {...};
-				local method = getnamecallmethod()
+			coroutine.wrap(function()
+				mt.__namecall = newcclosure(function(self, ...)
+					local args = {...};
+					local method = getnamecallmethod()
 
-				callback(self, method, ...);
-			end)
+					callback(self, method, ...);
+				end)
+			end)()
 
 
 			setreadonly(mt, true);
@@ -137,9 +139,11 @@ local BSinitUtil = {
 		if callback then
 			setreadonly(mt, false);
 
-			mt.__index = newcclosure(function(index, property)
-				callback(index, property)
-			end)
+			coroutine.wrap(function()
+				mt.__index = newcclosure(function(index, property)
+					callback(index, property)
+				end)
+			end)()
 
 			setreadonly(mt, true);
 		end
@@ -149,9 +153,11 @@ local BSinitUtil = {
 			setreadonly(mt, false);
 
 
-			mt.__newindex = newcclosure(function(tab, index, val)
-				callback(tab, index, val);
-			end)
+			coroutine.wrap(function()
+				mt.__newindex = newcclosure(function(tab, index, val)
+					callback(tab, index, val);
+				end)
+			end)()
 
 
 			setreadonly(mt, true);
