@@ -3,16 +3,27 @@
     // Blacksteel initUtil Branch \\                  
     \\  PROJECT IS IN PRE-ALPHA!  //
      ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-     		 	 =--=     
+     		 =--= .. =--=     
      		 QUICK ACCESS
-     		 	 =--=
+     		 =--= .. =--=
 --]]
+
+
+if getgenv()["BSinitUtil_Loaded"] == true then return end
 repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
- 
-getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.3"
 
+getgenv()["BSinitUtil_Loaded"] = true;
+getgenv()["versionId"] = "v0.0.4"
+
+local mt = getrawmetatable(game);
+setreadonly(mt, false);
+getgenv()['old'] = {
+	namecall = mt.__namecall;
+	index = mt.__index;
+	newindex = mt.__newindex;
+};
+setreadonly(mt, true);
 local BSinitUtil = {
 	["getChildren"] = function(...)
 		local args = {...};
@@ -105,19 +116,110 @@ local BSinitUtil = {
 		end
 
 	end;
-	["playSound"] = function(...)
+	["namecall"] = function(callback)		
+
+		if callback then
+			setreadonly(mt, false);
+
+
+			mt.__namecall = newcclosure(function(self, ...)
+				local args = {...};
+
+				local method = getnamecallmethod()
+
+				callback(self, method);
+
+				print("test!")
+				return old.namecall(self, ...);
+			end)
+
+
+			setreadonly(mt, true);
+		end;
+	end;
+	["index"] = function(callback)
+		if callback then
+			setreadonly(mt, false);
+
+			mt.__index = newcclosure(function(index, val)
+
+				callback(index, property)
+
+				return old.index(index, property);
+			end)
+
+			setreadonly(mt, true);
+		end
+	end;
+	["newindex"] = function(callback)
+		if callback then
+			setreadonly(mt, false);
+
+
+			mt.__newindex = newcclosure(function(tab, index, val)
+
+				callback(tab, index, val);
+
+				return old.newindex(tab, index, val)
+			end)
+
+
+			setreadonly(mt, true);
+		end
+	end;
+	["setuvalue"] = function(...)
 		local args = {...};
 		
-		local soundId = args[1] or nil;
+		local uvn = args[1]; -- find upvalue's name
+		local uvv = args[2]; -- set upvalue's new value
 		
-		
-		if soundId then
-			local sound = Instance.new("Sound", workspace)
-			sound.SoundId = soundId
-			sound.Volume = 1.5;
-			sound:Play()
+		for _, lol in pairs(debug.getregistry()) do			
+			if type(lol) == "function" then
+				local up = debug.getupvalues(lol);				
+				for _, lll in pairs(up) do
+					if type(lll) == "table" then
+						
+						if lll[uvn] then
+							lll[uvn] = uvv
+						end
+						
+					end
+				end					
+			end
 		end
-	end,
+		
+	end;
+	["getnearestplayer"] = function(...)
+		local args = {...};
+		
+		local magnitude = args[1] or 30;
+		local typeser = args[2] or "single";
+		
+		
+		local function scannearestarea(mag)
+			for i,v in pairs(game.Players:GetChildren()) do
+				local c = v.Character
+				local h = c.Humanoid
+				
+				local tab = {};
+				
+				if h and (h.RootPart.Position - game.Players.LocalPlayer.Character.Humanoid.RootPart.Position).Magnitude <= mag then
+					table.insert(tab, v);
+				end
+				
+				return tab;
+			end
+		end		
+		
+		local scan = scannearestarea(magnitude)
+		
+		if typeser == 'single' and #scan >= 1 then
+			return scan[1];
+		elseif typeser ~= "single" and #scan >= 1 then 
+			return scan;
+		end
+	end;
+	
 };
 
 local shorts = {
@@ -155,7 +257,7 @@ getgenv()["setAlias"] = function(...)
 	elseif type(alias) == "string" then
 		nv(tostring(alias), var)
 	end;
-	
+
 end;
 
 for i,v in pairs(BSinitUtil) do
@@ -166,3 +268,4 @@ for al,va in pairs(shorts) do
 	getgenv()[al] = va;
 end
 
+setreadonly(mt, true);
