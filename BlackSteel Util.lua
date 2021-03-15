@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.4"
+getgenv()["versionId"] = "v0.0.4a"
 
 local mt = getrawmetatable(game);
 setreadonly(mt, false);
@@ -141,7 +141,7 @@ local BSinitUtil = {
 		if callback then
 			setreadonly(mt, false);
 
-			mt.__index = newcclosure(function(index, val)
+			mt.__index = newcclosure(function(index, property)
 
 				callback(index, property)
 
