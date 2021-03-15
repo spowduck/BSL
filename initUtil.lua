@@ -7,10 +7,10 @@
      		 QUICK ACCESS
      		 	 =--=
 --]]
-local p = game.Players.LocalPlayer
-repeat wait() until p and p:HasAppearanceLoaded();
-
-
+print('tee')
+repeat wait() until game.Players.LocalPlayer;
+repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
+ 
 getgenv()["BSinitUtil_Loaded"] = true;
 
 local BSinitUtil = {
