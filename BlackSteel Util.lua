@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.5a"
+getgenv()["versionId"] = "v0.0.5b"
 
 local mt = getrawmetatable(game);
 setreadonly(mt, false);
@@ -204,7 +204,16 @@ local BSinitUtil = {
 			return scan;
 		end
 	end;
-
+	["runonspawn"] = function(...)
+		local args = {...};
+		local callback = args[1];
+		
+		local pp = game.Players.LocalPlayer
+		
+		pp.CharacterAdded:Connect(function(ad)
+			callback()
+		end)
+	end,
 };
 
 local shorts = {
