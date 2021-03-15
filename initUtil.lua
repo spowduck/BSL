@@ -12,7 +12,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
  
 getgenv()["BSinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.2"
+getgenv()["versionId"] = "v0.0.3"
 
 local BSinitUtil = {
 	["getChildren"] = function(...)
@@ -124,8 +124,8 @@ local BSinitUtil = {
 local shorts = {
 	["plr"] = game:GetService("Players").LocalPlayer;
 	["chr"] = game:GetService("Players").LocalPlayer.Character;
-	["hum"] = game:GetService("Players").LocalPlayer.Character.Humanoid;
-	["hrp"] = game:GetService("Players").LocalPlayer.Character.Humanoid.RootPart;
+	["hum"] = game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid");
+	["hrp"] = game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").RootPart;
 	["bp"] = game:GetService("Players").LocalPlayer.Backpack;
 	["coregui"] = game:GetService("CoreGui");
 	["rs"] = game:GetService("ReplicatedStorage");
