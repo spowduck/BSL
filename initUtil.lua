@@ -7,7 +7,6 @@
      		 QUICK ACCESS
      		 	 =--=
 --]]
-print('tee')
 repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
  
