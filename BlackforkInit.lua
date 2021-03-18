@@ -135,7 +135,9 @@ local BFinitUtil = {
 
 		if callback then
 			mt.__namecall = newcclosure(function(par, ...)
-				return callback(par, ...);
+				callback(par, ...);
+				
+				return oldnamecall(par, ...)
 			end)
 		end;
 
@@ -149,7 +151,9 @@ local BFinitUtil = {
 
 		if callback then
 			mt.__newindex = newcclosure(function(tab, index, val)
-				return callback(tab, index, val);
+				callback(tab, index, val);
+					
+				return oldnewindex(tab, index, val);
 			end)
 		end
 
