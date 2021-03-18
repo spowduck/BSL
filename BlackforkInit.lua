@@ -14,7 +14,7 @@ repeat wait() until game.Players.LocalPlayer;
 repeat wait() until game.Players.LocalPlayer:HasAppearanceLoaded();
 
 getgenv()["BFinitUtil_Loaded"] = true;
-getgenv()["versionId"] = "v0.0.1b"
+getgenv()["versionId"] = "v0.0.1c"
 
 local function L(url)
 	return loadstring(game:HttpGet(tostring(url)))()
@@ -127,6 +127,20 @@ local BFinitUtil = {
 		end
 
 	end;
+	["index"] = function(callback)
+		local mt = getrawmetatable(game);
+		getgenv()['oldindex'] = mt.__index;
+		
+		setreadonly(mt, false);
+		
+		if callback then
+		   mt.__index = newcclosure(function(index, prop)
+			return callback(index, prop)
+		   end)
+		end
+		
+		setreadonly(mt, true);
+	end;
 	["namecall"] = function(callback)		
 		local mt = getrawmetatable(game);
 		getgenv()['oldnamecall'] = mt.__namecall
@@ -135,9 +149,7 @@ local BFinitUtil = {
 
 		if callback then
 			mt.__namecall = newcclosure(function(par, ...)
-				callback(par, ...);
-				
-				return oldnamecall(par, ...)
+				return callback(par, ...);
 			end)
 		end;
 
@@ -151,9 +163,7 @@ local BFinitUtil = {
 
 		if callback then
 			mt.__newindex = newcclosure(function(tab, index, val)
-				callback(tab, index, val);
-					
-				return oldnewindex(tab, index, val);
+				return callback(tab, index, val);
 			end)
 		end
 
