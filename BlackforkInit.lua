@@ -127,20 +127,6 @@ local BFinitUtil = {
 		end
 
 	end;
-	["index"] = function(callback)
-		local mt = getrawmetatable(game);
-		getgenv()['oldindex'] = mt.__index;
-		
-		setreadonly(mt, false);
-		
-		if callback then
-		   mt.__index = newcclosure(function(index, prop)
-			return callback(index, prop)
-		   end)
-		end
-		
-		setreadonly(mt, true);
-	end;
 	["namecall"] = function(callback)		
 		local mt = getrawmetatable(game);
 		getgenv()['oldnamecall'] = mt.__namecall
